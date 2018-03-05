@@ -27,21 +27,26 @@ https://www.desmos.com/calculator/lbiu8ice6g
 '''
 def threeLinesArea(m1, b1, m2, b2, m3, b3):
     x1=lineIntersection(m1, b1, m2, b2)
-    y1=findy(m1,x1,b1)
+    y1=(m1*x1)+b1
+    print('X1',x1)
+    print('Y1',y1)
     x2=(lineIntersection(m1, b1, m3, b3))
-    y2=findy(m1,x2,b1)
+    y2=(m3*x2)+b3
+    print('X2',x2)
+    print('Y2',y2)
+    distance(x1, y1, x2, y2)
     x3=(lineIntersection(m2, b2, m3, b3))
-    y3=findy(m2,x3,b2)
+    y3=(m3*x3)+b3
+    print('X3',x3)
+    print('Y3',y3)
     s1=distance(x1, y1, x2, y2)
     s2=distance(x1, y1, x3, y3)
     s3=distance(x2, y2, x3, y3)
     print(s1)
     print(s2)
     print(s3)
-    if(str(s1)!='None' and str(s2)!='None' and str(s3)!='None'):
-        triangleArea(s1, s2, s3)
-    else:
-        print("no intersection")
+    triangleArea(s1, s2, s3)
+    
     
 def triangleArea(s1, s2, s3):
     S=(s1+s2+s3)/2
@@ -49,33 +54,19 @@ def triangleArea(s1, s2, s3):
     print('traingle area',area)
     
 def lineIntersection(m1, b1, m2, b2):
-    print(m1)
-    print(m2)
     if(m1!=m2):
         x=(b2-b1)/(m1-m2)
         return x
     else:
         return None
-    
 def distance(x1, y1, x2, y2):
-    print('dist',x1)
-    print(y1)
-    print(x2)
-    print(y2)
-    if (str(x1)!='None' and str(y1)!='None' and str(x2)!='None' and str(y2)!='None'):
-        s=math.sqrt(math.pow((int(x2-x1)),2)+math.pow(int(y2-y1),2))
-        return s
-def findy(m,x,b):
-    if(str(x)!='None'):
-        y=(m*x)+b
-        print('X1',x)
-        print('Y1',y)
-        return y
-    
-m1=5
-b1=40
+    s=math.sqrt(math.pow((x2-x1),2)+math.pow((y2-y1),2))
+    return s
+
+m1=2
+b1=1
 m2=1
-b2=10
+b2=-1
 m3=-1
 b3=50
 threeLinesArea(m1, b1, m2, b2, m3, b3)
