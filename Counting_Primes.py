@@ -20,9 +20,9 @@ def Counting_Primes1(m):
     for i in range(1,m):
         x=Counting_Primes2(i)
         if(x==2):
-            print('numbber,count',i,a)
+            #print('numbber,count',i,a)
             a=a+1
     return a
     
     
-print(Counting_Primes1(100))
+print('number of prime number',Counting_Primes1(13))
