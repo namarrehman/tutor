@@ -1,3 +1,4 @@
+import os
 def update(str1):
         str3=''
         rownum=input("enter the row number(from 1 onwards):")
@@ -5,7 +6,6 @@ def update(str1):
         fvalue=input("enter the field value:")
         x=str1[int(rownum)].split(",")
         columns=str1[0].split(",")#to identify column header
-        print(columns)
         for i in range(0,len(columns)):
             if(columns[i]==columnname)or columns[i]==(columnname+'\n'):#validate column header with enetered value
                 colmnpos=i
@@ -14,11 +14,7 @@ def update(str1):
            x[colmnpos]=fvalue+'\n'
         else:
            x[colmnpos]=fvalue
-        for i in range(0,len(x)):
-                if(i==len(x)-1):
-                         str3=str3+x[i]
-                else:
-                        str3=str3+x[i]+','
+        str3=",".join(x)
         str1[int(rownum)]=str3
         return str1
         
@@ -31,35 +27,31 @@ def save(str1):
         fo=open("book.csv","w")
         for i in range(0,len(str1)):
                 fo.write("%s"%str1[i])
-def viewfile():
-        filecont=[]
+if os.path.isfile('book.csv'):
         fo=open("book.csv","r")
+        str1=[]
         for line in fo:
-                filecont.append(line)
-        print('file contents',filecont)
-        fo.close
-fo=open("book.csv","r")
-str1=[]
-for line in fo:
-        str1.append(line)
-while(1):
-        print('update-->1')
-        print('delete-->2')
-        print('exit---->3')
+                str1.append(line)
+        while(1):
+                print('update-->1')
+                print('delete-->2')
+                print('exit---->3')
+                print('file connetns' ,str1)
+                x=input('enter the menu option')
+                
+                if(int(x)==3):
+                        break
+                else:
+                        if(int(x)==2):
+                                str1=dell(str1)
+                                print(str1)
+                                save(str1)
 
-        x=input('enter the menu option')
-        if(int(x)==3):
-                break
-        else:
-                if(int(x)==2):
-                        str1=dell(str1)
-                        print(str1)
-                        save(str1)
+                        if(int(x)==1):
+                                str1=update(str1)
+                                print(str1)
+                                save(str1)
 
-                if(int(x)==1):
-                        str1=update(str1)
-                        print(str1)
-                        save(str1)
-
-
+else:
+        print("file doesnt exist")
                 
