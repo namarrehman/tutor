@@ -1,60 +1,72 @@
 import os
-def update(str1):
+def update(dicstr1):
         dic={}
         str4=[]
         str3=''
         rownum=input("enter the row number(from 1 onwards):")
-        columnname=input("enter the cloumn name:")
-        fvalue=input("enter the field value:")
-        x=str1[int(rownum)].strip('\n').split(",")
-        columns=(str1[0]).strip('\n').split(",")#to identify column header
-        if columnname in columns:
-                for i in range(0,len(columns)):
-                        dic["%s"%columns[i]]=x[i]
-                dic[columnname]=fvalue
-                for i in dic.values():#this used to make the each fields in comma seprated way(join function line #17) ..
-                    str4.append(i)
-                str3=",".join(str4)+'\n'
-                str1[int(rownum)]=str3
-        else:
-                print('-------invlaid column name----')
-        return str1
-        
-def dell(str1):
-        rownum=input('enter the row numer to be deleted')
-        del str1[int(rownum)]
-        return str1
+        if(int(rownum)<len(dicstr1)):
+                columnname=input("enter the cloumn name:")
+                if 'columnname' in dic.keys():
+                        fvalue=input("enter the field value:")
+                        x=dicstr1[int(rownum)]
+                        x["%s"%columnname]=fvalue
+                        dicstr1[int(rownum)]=x
+                else:
+                        print('-------invlaid column name----')
 
-def save(str1):
+        else:
+                print('invalid row number')
+        return dicstr1
+        
+def dell(dicstr1):
+        rownum=input('enter the row numer to be deleted from 0 onwards')
+        del dicstr1[int(rownum)]
+        return dicstr1
+
+def save(dicstr1):
         fo=open("book.csv","w")
+        col=(','.join(dicstr1[0].keys()))+"\n"
+        fo.write(col)
         for i in range(0,len(str1)):
-                fo.write("%s"%str1[i])
+                rec=(','.join(dicstr1[i].values()))+"\n"
+                fo.write(rec)
         fo.close
+
+#Program exuection point
+
 if os.path.isfile('book.csv'):
         fo=open("book.csv","r")
-        str1=[]
+        coulmns=((fo.readline().strip("\n"))).split(",")
+        dicstr1=[]
+        records=[]
         for line in fo:
-                
-                str1.append(line)
+                dic={}
+                records=line.strip('\n').split(',')
+                for i in range(0,len(records)):
+                        dic["%s"%coulmns[i]]=records[i]
+                dicstr1.append(dic)
+        #print(dicstr1)
+                        
         while(1):
+                
                 print('update-->1')
                 print('delete-->2')
                 print('exit---->3')
-                print('file connetns' ,str1)
+                print('file connetns' ,dicstr1)
                 x=input('enter the menu option')
                 
                 if(int(x)==3):
                         break
                 else:
                         if(int(x)==2):
-                                str1=dell(str1)
-                                print(str1)
+                                str1=dell(dicstr1)
+                                #print(dicstr1)
                                 save(str1)
 
                         if(int(x)==1):
-                                str1=update(str1)
-                                print(str1)
-                                save(str1)
+                                str1=update(dicstr1)
+                                #print(dicstr1)
+                                save(dicstr1)
 
 else:
         print("file doesnt exist")
