@@ -3,10 +3,10 @@ def update(dicstr1):
         dic={}
         str4=[]
         str3=''
-        rownum=input("enter the row number(from 1 onwards):")
+        rownum=input("enter the row number(from 0 onwards):")
         if(int(rownum)<len(dicstr1)):
                 columnname=input("enter the cloumn name:")
-                if 'columnname' in dic.keys():
+                if columnname in dicstr1[0].keys():
                         fvalue=input("enter the field value:")
                         x=dicstr1[int(rownum)]
                         x["%s"%columnname]=fvalue
@@ -20,14 +20,17 @@ def update(dicstr1):
         
 def dell(dicstr1):
         rownum=input('enter the row numer to be deleted from 0 onwards')
-        del dicstr1[int(rownum)]
+        if(int(rownum)<=len(dicstr1)):
+                del dicstr1[int(rownum)]
+        else:
+                print('-----------invlaid row ')
         return dicstr1
 
 def save(dicstr1):
         fo=open("book.csv","w")
         col=(','.join(dicstr1[0].keys()))+"\n"
         fo.write(col)
-        for i in range(0,len(str1)):
+        for i in range(0,len(dicstr1)):
                 rec=(','.join(dicstr1[i].values()))+"\n"
                 fo.write(rec)
         fo.close
@@ -64,7 +67,7 @@ if os.path.isfile('book.csv'):
                                 save(str1)
 
                         if(int(x)==1):
-                                str1=update(dicstr1)
+                                dicstr1=update(dicstr1)
                                 #print(dicstr1)
                                 save(dicstr1)
 
